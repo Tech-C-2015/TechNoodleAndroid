@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.example.teacher.study_t.sqlite.entity.UserEntity;
+import com.example.teacher.technoodleandroid.sqlite.entity.UserEntity;
 
 import java.util.ArrayList;
 import java.util.List;

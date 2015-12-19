@@ -4,7 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.teacher.study_t.sqlite.UserHelper;
+import com.example.teacher.technoodleandroid.sqlite.UserHelper;
+
 
 /**
  * Created by teacher on 2015/11/21.
