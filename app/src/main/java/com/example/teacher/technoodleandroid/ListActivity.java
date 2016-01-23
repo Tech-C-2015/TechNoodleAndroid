@@ -3,7 +3,7 @@ package com.example.teacher.technoodleandroid;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +15,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends ActionBarActivity {
 
     // フィールドで変数設定
     private ListView mListRamen;
     private SwipeRefreshLayout mSwipeListRamen;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +32,11 @@ public class ListActivity extends AppCompatActivity {
         mListRamen = (ListView) findViewById(R.id.listRamen);
         mSwipeListRamen = (SwipeRefreshLayout) findViewById(R.id.swipeListRamen);
 
-        RamenItemAdapter adapter = getDataLoadAdapter();
 
+
+        final RamenItemAdapter adapter  = new RamenItemAdapter(this);
+
+        dataLoadAdapter(adapter);
         // ListviewのAdapterへ設定
         mListRamen.setAdapter(adapter);
 
@@ -59,8 +64,10 @@ public class ListActivity extends AppCompatActivity {
                     @Override
                     public void onRefresh() {
 
+                        List<RamenItem> addList = new ArrayList<>();
+                        addList.add(new RamenItem("takeda", null));
                         // 更新内容
-                        RamenItemAdapter adapter = getDataLoadAdapter();
+                        addDataAdapter(adapter, addList);
 
                         // ListviewのAdapterへ設定
                         mListRamen.setAdapter(adapter);
@@ -70,59 +77,57 @@ public class ListActivity extends AppCompatActivity {
                     }
                 });
 
-
-
     }
 
     // リストデータ生成
-    final List<RamenItem> RamenLst = new ArrayList<>();
+   final List<RamenItem> RamenLst = new ArrayList<>();
 
-    public RamenItemAdapter getDataLoadAdapter(){
+
+
+    public RamenItemAdapter dataLoadAdapter(RamenItemAdapter adapter) {
 
 
         // リストデータ組立
         //ここの時点でAPIからラーメン情報を取得
         //RamenItemListにデータを追加
 
-                // リストデータをAdapterへ設定
+        // リストデータをAdapterへ設定
+        RamenLst.add(new RamenItem("kato", null));
+        RamenLst.add(new RamenItem("sato", null));
 
-        RamenItemAdapter adapter = new RamenItemAdapter(this);
+
+
         adapter.addLst(RamenLst);
 
         return adapter;
     }
 
+    public RamenItemAdapter addDataAdapter(RamenItemAdapter adapter ,List<RamenItem> list){
+
+        adapter.addLst(list);
+
+        return adapter;
+    }
+
+
     /**
      * Listview表示用のitemリストクラス
      */
     class RamenItem {
-        private String _title;
         private ImageView _ramenImage;
         private String _name;
-        private String _taste;
-        private String _cost;
 
 
-        public String getTitle(){
-            return _title;
-        }
-
-        public String getName(){
+        public String getName() {
             return _name;
         }
 
-        public String getTaste(){
-            return _taste;
+        public ImageView getRamenImage(){
+            return _ramenImage;
         }
 
-        public String getCost(){
-            return _cost;
-        }
-
-        public RamenItem(String title, String name, String cost , ImageView ramenImage){
-            _title = title;
+        public RamenItem(String name,  ImageView ramenImage) {
             _name = name;
-            _cost = cost;
             _ramenImage = ramenImage;
 
         }
@@ -139,35 +144,39 @@ public class ListActivity extends AppCompatActivity {
 
         /**
          * コンストラクタ
+         *
          * @param context
          */
-        public RamenItemAdapter(Context context){
+        public RamenItemAdapter(Context context) {
             _context = context;
-            _list = new ArrayList();
-            _layoutInflater = (LayoutInflater) context.
+            _list = new ArrayList<>();
+            _layoutInflater = (LayoutInflater)
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         /**
          * リストデータの追加（単）
+         *
          * @param data
          */
-        public void add(RamenItem data){
+        public void add(RamenItem data) {
             _list.add(data);
             notifyDataSetChanged();
         }
 
         /**
          * リストデータの追加（リスト一式）
+         *
          * @param dataLst
          */
-        public void addLst(List<RamenItem> dataLst){
-            for(RamenItem data : dataLst)
+        public void addLst(List<RamenItem> dataLst) {
+            for (RamenItem data : dataLst)
                 add(data);
         }
 
         /**
          * リストの個数を返す
+         *
          * @return
          */
         @Override
@@ -177,6 +186,7 @@ public class ListActivity extends AppCompatActivity {
 
         /**
          * 指定位置のリストを返す
+         *
          * @param position
          * @return
          */
@@ -187,6 +197,7 @@ public class ListActivity extends AppCompatActivity {
 
         /**
          * リストのID値を返す
+         *
          * @param position
          * @return
          */
@@ -197,6 +208,7 @@ public class ListActivity extends AppCompatActivity {
 
         /**
          * 画面の表示情報を返す
+         *
          * @param position
          * @param convertView
          * @param parent
@@ -205,30 +217,40 @@ public class ListActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             Holder holder = null;
-            if(convertView == null) {
+            if (convertView == null) {
                 // インスタンス取得
-                convertView = _layoutInflater.inflate(R.layout.activity_list, null);
+                convertView = _layoutInflater.inflate(R.layout.list_row, null);
+              //  LinearLayout ll = (LinearLayout) _layoutInflater.inflate(R.layout.list_row, null);
+
+                // ImageView rImage = new ImageView(ListActivity.this);
+                //rImage.setImageResource();
                 holder = new Holder();
-              //  holder.txtTitle = convertView.findViewById();
+                holder.txtName=(TextView) convertView.findViewById(R.id.item_name);
+                // ((ImageView) ll.findViewById(R.id.item_image)).setImageBitmap(((BitmapDrawable) RamenLst.get(position).getRamenImage().getDrawable()).getBitmap());
+               // ((ListView) convertView.findViewById(R.id.listRamen)).addView(ll);
+
+
+                //  holder.txtTitle = convertView.findViewById();
                 convertView.setTag(holder);
-            }else{
+            } else {
                 holder = (Holder) convertView.getTag();
             }
 
             // データの取得
-            RamenItem item = (RamenItem)getItem(position);
+            RamenItem item = (RamenItem) getItem(position);
 
             //　データ設定
-            holder.txtTitle.setText(item.getTitle());
+
+            holder.txtName.setText(item.getName());
+           // holder.rImage.setImageDrawable(item.getRamenImage().getDrawable());
 
             return convertView;
         }
 
-        private class Holder{
+        private class Holder {
             ImageView rImage;
-            TextView txtTitle;
             TextView txtName;
-            TextView txtCost;
+
         }
     }
 
