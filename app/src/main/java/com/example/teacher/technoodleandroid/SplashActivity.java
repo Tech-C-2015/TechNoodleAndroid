@@ -20,7 +20,7 @@ public class SplashActivity extends ActionBarActivity {
             public void run() {
                 startActivity(new Intent(getApplication(),MainActivity.class));
             }
-        },5000);
+        },500);
     }
 
 }
