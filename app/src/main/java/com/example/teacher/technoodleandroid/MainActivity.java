@@ -14,6 +14,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.teacher.technoodleandroid.util.GetRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,8 +30,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
         editWord = (EditText) findViewById(R.id.edit_word);
         txtResult = (TextView) findViewById(R.id.txt_result);
@@ -52,8 +53,22 @@ public class MainActivity extends ActionBarActivity {
         GetRequest request = new GetRequest(new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                //実際のjsonデータはresponseに格納されてる
-                txtResult.setText(response);
+
+                try {
+                    JSONObject json = new JSONObject(response);
+                    JSONObject info = json.getJSONObject("info");
+
+                    while(info.keys().hasNext()){
+                        String key = info.keys().next();
+                        JSONObject data = info.getJSONObject(key);
+                        data.getString("id");
+                        data.getString("image");
+                        data.get("");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
