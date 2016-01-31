@@ -18,6 +18,7 @@ public class ListActivity extends ActionBarActivity {
     // フィールドで変数設定
     private ListView mListRamen;
     private SwipeRefreshLayout mSwipeListRamen;
+
     private static final String RamenItemURL = "http://133.130.106.164/Tech-Noodle-Api/public/noodle/list";
 
     private static final String RamenReviewURL = "http://133.130.106.164/Tech-Noodle-Api/public/review/review";
@@ -98,7 +99,7 @@ public class ListActivity extends ActionBarActivity {
    final List<RamenItem> RamenLst = new ArrayList<>();
 
 
-
+    //Ramenデータのローダー
     public RamenItemAdapter dataLoadAdapter(RamenItemAdapter adapter) {
 
 
@@ -123,6 +124,7 @@ public class ListActivity extends ActionBarActivity {
         return adapter;
     }
 
+    //ラーメンデータの追加
     public RamenItemAdapter addDataAdapter(RamenItemAdapter adapter ,List<RamenItem> list){
 
         adapter.addLst(list);

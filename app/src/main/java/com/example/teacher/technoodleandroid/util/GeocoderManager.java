@@ -37,9 +37,24 @@ public class GeocoderManager {
 
             //addressをStringへ
             String buf;
-            for (int i = 0; (buf = address.getAddressLine(i)) != null; i++){
-                strbuid.append("address.getAddressLine("+i+"):"+buf+"\n");
-            }
+            String[] str_add = new String[3];
+
+            str_add[0] = address.getAdminArea();
+            //str_add[1] = address.get
+
+            strbuid.append(address.getAddressLine(1));
+                strbuid.append(address.getAdminArea());//都道府県
+                strbuid.append(address.getFeatureName());//号
+  //          strbuid.append(address.getPremises());//不明
+            strbuid.append(address.getSubLocality());//町名
+            strbuid.append(address.getCountryName());////国名
+            strbuid.append(address.getExtras());
+//          strbuid.append(address.getSubAdminArea());//不明
+//            strbuid.append(address.getSubThoroughfare());//不明
+            strbuid.append(address.getThoroughfare());//丁目
+
+
+
 
             address_string = strbuid.toString();
 
