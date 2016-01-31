@@ -23,6 +23,7 @@ public class MainActivity extends ActionBarActivity {
     TextView txtResult;
     Button btnGet;
 
+    private static final String RamenItemURL = "http://133.130.106.164/Tech-Noodle-Api/public/noodle/list";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +61,7 @@ public class MainActivity extends ActionBarActivity {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        }, params);
+        }, params, RamenItemURL);
         app.mRequestQueue.add(request);
     }
 

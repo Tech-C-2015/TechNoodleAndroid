@@ -10,8 +10,8 @@ public class GetRequest extends StringRequest {
     //API　URLの設置
     private static final String URL = "http://133.130.106.164/Tech-Noodle-Api/public/noodle/list";
 
-    public GetRequest(Response.Listener<String> listener, Response.ErrorListener errorListener, Map<String, String> mParams) {
-        super(Method.GET, URL, listener, errorListener);
+    public GetRequest(Response.Listener<String> listener, Response.ErrorListener errorListener, Map<String, String> mParams, String url) {
+        super(Method.GET, url, listener, errorListener);
         this.mParams = mParams;
     }
 
