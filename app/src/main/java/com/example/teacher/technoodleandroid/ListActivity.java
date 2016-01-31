@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.widget.ListView;
 
 import com.example.teacher.technoodleandroid.adapter.RamenItemAdapter;
+import com.example.teacher.technoodleandroid.client.ServerApiCall;
 import com.example.teacher.technoodleandroid.entity.RamenItem;
 import com.example.teacher.technoodleandroid.util.GeocoderManager;
 
@@ -33,6 +34,17 @@ public class ListActivity extends ActionBarActivity {
         mSwipeListRamen = (SwipeRefreshLayout) findViewById(R.id.swipeListRamen);
 
 
+
+        new ServerApiCall().callStoreList(new ServerApiCall.Listener<List<RamenItem>>() {
+            @Override
+            public void onFinish(List<RamenItem> obj) {
+
+                if(obj == null) return;
+
+                String id = obj.get(0).getId();
+
+            }
+        }, (AppController) ListActivity.this.getApplication(), "東京");
 
 
         final RamenItemAdapter adapter  = new RamenItemAdapter(this);
@@ -65,18 +77,20 @@ public class ListActivity extends ActionBarActivity {
                     @Override
                     public void onRefresh() {
 
-                        List<RamenItem> addList = new ArrayList<>();
-                        addList.add(new RamenItem(0,"takeda", null, null, null, null, null));
+/*
                         // 更新内容
-                        addDataAdapter(adapter, addList);
+                        addDataAdapter(adapter, null);
 
                         // ListviewのAdapterへ設定
                         mListRamen.setAdapter(adapter);
 
                         if (mSwipeListRamen.isRefreshing())
                             mSwipeListRamen.setRefreshing(false);
+                            */
                     }
                 });
+
+
 
     }
 
@@ -98,9 +112,9 @@ public class ListActivity extends ActionBarActivity {
         //RamenItemListにデータを追加
 
         // リストデータをAdapterへ設定
-        RamenLst.add(new RamenItem(0,"kato", null, null, null, null, null));
-        RamenLst.add(new RamenItem(1,"sato", null, null, null, null, null));
-        RamenLst.add(new RamenItem(2,tmp, null, null, null, null, null));
+//        RamenLst.add(new RamenItem(0,"kato", null, null, null, null, null));
+//        RamenLst.add(new RamenItem(1,"sato", null, null, null, null, null));
+//        RamenLst.add(new RamenItem(2,tmp, null, null, null, null, null));
 
 
 

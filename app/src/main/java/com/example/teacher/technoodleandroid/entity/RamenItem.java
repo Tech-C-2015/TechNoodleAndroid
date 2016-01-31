@@ -5,7 +5,7 @@ package com.example.teacher.technoodleandroid.entity;
  */
 public class RamenItem {
 
-    private int _id;
+    private String _id;
     private String _ramenImage;
     private String _name;
     private String _address_pre;
@@ -13,8 +13,7 @@ public class RamenItem {
     private String _nearest_sta;
     private String _tag;
 
-
-    public int getId(){ return _id;}
+    public String getId(){ return _id;}
 
     public String getName() {
         return _name;
@@ -32,13 +31,34 @@ public class RamenItem {
 
     public String getTag(){ return _tag; }
 
-    public RamenItem(int id, String name, String address_pre,  String address_reg , String nearest_sta, String tag, String ramenImage) {
-        _name = name;
-        _address_pre = address_pre;
-        _address_reg = address_reg;
-        _nearest_sta = nearest_sta;
-        _tag = tag;
-        _ramenImage = ramenImage;
+    public RamenItem(){}
 
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public void set_tag(String _tag) {
+        this._tag = _tag;
+    }
+
+    public void set_nearest_sta(String _nearest_sta) {
+        this._nearest_sta = _nearest_sta;
+    }
+
+    public void set_address_reg(String _address_reg) {
+        this._address_reg = _address_reg;
+    }
+
+    public void set_address_pre(String _address_pre) {
+        this._address_pre = _address_pre;
+    }
+
+    public void set_name(String _name) {
+        this._name = _name;
+    }
+
+    public void set_ramenImage(String _ramenImage) {
+        this._ramenImage = _ramenImage;
     }
 }

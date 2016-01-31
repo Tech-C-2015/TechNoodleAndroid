@@ -1,5 +1,6 @@
 package com.example.teacher.technoodleandroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -8,14 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.example.teacher.technoodleandroid.util.GetRequest;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,14 +19,12 @@ public class MainActivity extends ActionBarActivity {
     TextView txtResult;
     Button btnGet;
 
-    private static final String RamenItemURL = "http://133.130.106.164/Tech-Noodle-Api/public/noodle/list";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         editWord = (EditText) findViewById(R.id.edit_word);
-        txtResult = (TextView) findViewById(R.id.txt_result);
         btnGet = (Button) findViewById(R.id.btn_get);
         editWord.setText("東京");
         //click監視
@@ -49,35 +40,7 @@ public class MainActivity extends ActionBarActivity {
 
     //get送信
     protected void getBtn(View view) {
-        Map<String, String> params = makeParameter();
-        AppController app = (AppController) getApplication();
-        GetRequest request = new GetRequest(new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject json = new JSONObject(response);
-                    JSONObject info = json.getJSONObject("info");
-
-                    while(info.keys().hasNext()){
-                        String key = info.keys().next();
-                        JSONObject data = info.getJSONObject(key);
-                        data.getString("id");
-                        data.getString("image");
-                        data.get("");
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }, params, RamenItemURL);
-        app.mRequestQueue.add(request);
+        startActivity(new Intent(getApplication(),ListActivity.class));
     }
 
     //editwordからMapにkeyとvalueのセット
