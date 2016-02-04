@@ -7,8 +7,8 @@ import android.widget.ListView;
 
 import com.example.teacher.technoodleandroid.adapter.RamenItemAdapter;
 import com.example.teacher.technoodleandroid.client.ServerApiCall;
+import com.example.teacher.technoodleandroid.entity.CreateParams;
 import com.example.teacher.technoodleandroid.entity.RamenItem;
-import com.example.teacher.technoodleandroid.util.GeocoderManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,25 +34,31 @@ public class ListActivity extends ActionBarActivity {
         mListRamen = (ListView) findViewById(R.id.listRamen);
         mSwipeListRamen = (SwipeRefreshLayout) findViewById(R.id.swipeListRamen);
 
+        final RamenItemAdapter adapter  = new RamenItemAdapter(this);
 
+        CreateParams mParams = new CreateParams();
+        mParams.CreateRamenItemParam();
+        mParams.setRegion("新宿区");
 
         new ServerApiCall().callStoreList(new ServerApiCall.Listener<List<RamenItem>>() {
             @Override
             public void onFinish(List<RamenItem> obj) {
 
-                if(obj == null) return;
+                if (obj == null) return;
 
-                String id = obj.get(0).getId();
+                //String id = obj.get(0).getId();
+                adapter.addLst(obj);
 
             }
-        }, (AppController) ListActivity.this.getApplication(), "東京");
+        }, (AppController) ListActivity.this.getApplication(), mParams.getParams());
 
 
-        final RamenItemAdapter adapter  = new RamenItemAdapter(this);
-
-        dataLoadAdapter(adapter);
+         dataLoadAdapter(adapter);
         // ListviewのAdapterへ設定
         mListRamen.setAdapter(adapter);
+
+
+
 
         /*
         // Listviewのクリックイベント
@@ -100,20 +106,23 @@ public class ListActivity extends ActionBarActivity {
 
 
     //Ramenデータのローダー
-    public RamenItemAdapter dataLoadAdapter(RamenItemAdapter adapter) {
+    public RamenItemAdapter dataLoadAdapter(final RamenItemAdapter adapter) {
+
 
 
         // リストデータ組立
         //ここの時点でAPIからラーメン情報を取得
 
-        GeocoderManager geocode_manager = new GeocoderManager(this);
+     //   GeocoderManager geocode_manager = new GeocoderManager(this);
 
-         String tmp = geocode_manager.getAddressFromGeocode(43.06311, 141.353);
+      //  String tmp = geocode_manager.getAddressFromGeocode(43.06311, 141.353);
 
         //RamenItemListにデータを追加
 
         // リストデータをAdapterへ設定
-//        RamenLst.add(new RamenItem(0,"kato", null, null, null, null, null));
+        RamenItem ite = new RamenItem();
+        ite.set_name("kato");
+       RamenLst.add(ite);
 //        RamenLst.add(new RamenItem(1,"sato", null, null, null, null, null));
 //        RamenLst.add(new RamenItem(2,tmp, null, null, null, null, null));
 
@@ -122,6 +131,7 @@ public class ListActivity extends ActionBarActivity {
         adapter.addLst(RamenLst);
 
         return adapter;
+
     }
 
     //ラーメンデータの追加

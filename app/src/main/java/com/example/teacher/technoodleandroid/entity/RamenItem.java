@@ -11,6 +11,26 @@ public class RamenItem {
     private String _address_pre;
     private String _address_reg;
     private String _nearest_sta;
+
+    public String get_tel() {
+        return _tel;
+    }
+
+    public void set_tel(String _tel) {
+        this._tel = _tel;
+    }
+
+    private String _tel;
+
+    public String get_address_add() {
+        return _address_add;
+    }
+
+    public void set_address_add(String _address_add) {
+        this._address_add = _address_add;
+    }
+
+    private String _address_add;
     private String _tag;
 
     public String getId(){ return _id;}
@@ -22,6 +42,7 @@ public class RamenItem {
     public String getRamenImage(){
         return _ramenImage;
     }
+
 
     public String getAddressPre(){ return _address_pre; }
 
