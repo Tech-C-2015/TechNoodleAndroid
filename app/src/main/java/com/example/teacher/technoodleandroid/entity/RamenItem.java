@@ -1,5 +1,13 @@
 package com.example.teacher.technoodleandroid.entity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  * Created by student on 2016/01/30.
  */
@@ -11,6 +19,30 @@ public class RamenItem {
     private String _name;
     private String _prefecture;
     private String _region;
+
+    public Bitmap get_ramenBitmap() {
+        return _ramenBitmap;
+    }
+
+    public void set_ramenBitmap() {
+            Bitmap image;
+        if(this.get_ramenImage() != null) {
+            try {
+                URL imageUrl = new URL(this.get_ramenImage());
+                InputStream imageIs;
+                imageIs = imageUrl.openStream();
+                image = BitmapFactory.decodeStream(imageIs);
+
+            } catch (MalformedURLException e) {
+                image = null;
+            } catch (IOException e) {
+                image = null;
+            }
+            this._ramenBitmap = image;
+        }
+    }
+
+    private Bitmap _ramenBitmap;
 
     public String get_id() {
         return _id;

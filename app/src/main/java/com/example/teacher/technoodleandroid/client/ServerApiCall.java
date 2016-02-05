@@ -64,6 +64,7 @@ public class ServerApiCall {
                             item.set_tag(data.getString("tag"));
                             item.set_address(data.getString("address"));
                             item.set_tel(data.getString("tel"));
+                           //item.set_ramenBitmap();
 
                             itemLst.add(item);
 /*

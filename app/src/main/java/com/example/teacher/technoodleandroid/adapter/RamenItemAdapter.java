@@ -116,6 +116,7 @@ public class RamenItemAdapter extends BaseAdapter {
             //rImage.setImageResource();
             holder = new Holder();
             holder.txtName=(TextView) convertView.findViewById(R.id.item_name);
+            holder.rImage = (ImageView) convertView.findViewById(R.id.item_image);
             // ((ImageView) ll.findViewById(R.id.item_image)).setImageBitmap(((BitmapDrawable) RamenLst.get(position).getRamenImage().getDrawable()).getBitmap());
             // ((ListView) convertView.findViewById(R.id.listRamen)).addView(ll);
 
@@ -131,7 +132,43 @@ public class RamenItemAdapter extends BaseAdapter {
 
         //　データ設定
 
-        holder.txtName.setText(item.get_name());
+       holder.txtName.setText(item.get_name());
+       holder.rImage.setImageBitmap(item.get_ramenBitmap());
+/*
+        final ImageView image_view = holder.rImage;
+        AsyncTask<String, Void, Bitmap> async = new AsyncTask<String, Void, Bitmap>(){
+
+
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                super.onPostExecute(bitmap);
+
+                if(bitmap != null)
+                image_view.setImageBitmap(bitmap);
+
+            }
+
+            @Override
+            protected Bitmap doInBackground(String... strings) {
+                Bitmap image;
+                try {
+                    URL imageUrl = new URL(strings[0]);
+                    InputStream imageIs;
+                    imageIs = imageUrl.openStream();
+                    image = BitmapFactory.decodeStream(imageIs);
+
+                }catch(MalformedURLException e){
+                    image = null;
+                }catch(IOException e){
+                    image = null;
+                }
+                return image;
+            }
+        }.execute(item.get_ramenImage());
+
+*/
+
+       // holder.rImage.setImageBitmap(image);
         // holder.rImage.setImageDrawable(item.getRamenImage().getDrawable());
 
         return convertView;

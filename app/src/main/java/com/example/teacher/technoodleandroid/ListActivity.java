@@ -1,5 +1,6 @@
 package com.example.teacher.technoodleandroid;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -47,6 +48,20 @@ public class ListActivity extends ActionBarActivity {
                 if (obj == null) return;
 
                 //String id = obj.get(0).getId();
+                for(RamenItem ramen: obj){
+
+                    AsyncTask<List<RamenItem>, Void, List<RamenItem>> async = new AsyncTask<List<RamenItem>, Void, List<RamenItem>>(){
+
+                        @Override
+                        protected List<RamenItem> doInBackground(List<RamenItem>... ramens) {
+                           for(RamenItem ramen: ramens[0]){
+                               ramen.set_ramenBitmap();
+                           }
+
+                            return ramens[0];
+                        }
+                    };
+                }
                 adapter.addLst(obj);
 
             }
@@ -107,8 +122,6 @@ public class ListActivity extends ActionBarActivity {
 
     //Ramenデータのローダー
     public RamenItemAdapter dataLoadAdapter(final RamenItemAdapter adapter) {
-
-
 
         // リストデータ組立
         //ここの時点でAPIからラーメン情報を取得
