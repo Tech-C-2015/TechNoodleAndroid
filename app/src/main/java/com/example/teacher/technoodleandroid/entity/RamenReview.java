@@ -5,13 +5,14 @@ package com.example.teacher.technoodleandroid.entity;
  */
 public class RamenReview {
 
+    //ラーメン店Review情報を格納するクラス
     private String _id;
     private String _review;
-    private String user_name;
-    private String shop_id;
-    private String created_at;
-    private String updated_at;
-    private String rank;
+    private String _shop_id;
+    private String _created_at;
+    private String _updated_at;
+    private String _rank;
+    private String _user_name;
 
     public RamenReview() {
     }
@@ -32,43 +33,43 @@ public class RamenReview {
         this._review = _review;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String get_shop_id() {
+        return _shop_id;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void set_shop_id(String _shop_id) {
+        this._shop_id = _shop_id;
     }
 
-    public String getShop_id() {
-        return shop_id;
+    public String get_created_at() {
+        return _created_at;
     }
 
-    public void setShop_id(String shop_id) {
-        this.shop_id = shop_id;
+    public void set_created_at(String _created_at) {
+        this._created_at = _created_at;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String get_updated_at() {
+        return _updated_at;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void set_updated_at(String _updated_at) {
+        this._updated_at = _updated_at;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public String get_rank() {
+        return _rank;
     }
 
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
+    public void set_rank(String _rank) {
+        this._rank = _rank;
     }
 
-    public String getRank() {
-        return rank;
+    public String get_user_name() {
+        return _user_name;
     }
 
-    public void setRank(String rank) {
-        this.rank = rank;
+    public void set_user_name(String _user_name) {
+        this._user_name = _user_name;
     }
 }

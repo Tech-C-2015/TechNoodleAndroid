@@ -20,6 +20,7 @@ import java.util.List;
 
 /**
  * ListView用のAdapterクラス　※レイアウトを操作したい場合に用意する
+ * ラーメン店リスト表示画面用のadapter
  */
 
 
@@ -130,7 +131,7 @@ public class RamenItemAdapter extends BaseAdapter {
 
         //　データ設定
 
-        holder.txtName.setText(item.getName());
+        holder.txtName.setText(item.get_name());
         // holder.rImage.setImageDrawable(item.getRamenImage().getDrawable());
 
         return convertView;

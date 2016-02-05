@@ -25,12 +25,16 @@ public class ServerApiCall {
         void onFinish(T obj);
     }
 
+    //ラーメン店情報取得用UR
     private static final String RamenItemURL = "http://133.130.106.164/Tech-Noodle-Api/public/noodle/list";
 
+    //Review取得用URL
     private static final String RamenReviewURL = "http://133.130.106.164/Tech-Noodle-Api/public/review/review";
 
+    //Review投稿用URL
     private static final String RamenReviewCreateURL  ="http://133.130.106.164/Tech-Noodle-Api/public/review/create";
 
+    //ラーメン店情報取得メソッド
     public void callStoreList(final Listener l, AppController app, Map<String, String> params) {
         GetRequest request = new GetRequest(new Response.Listener<String>() {
             @Override
@@ -49,15 +53,16 @@ public class ServerApiCall {
                             RamenItem item = new RamenItem();
                             String key = keys.next();
                             JSONObject data = info.getJSONObject(key);
-                            // TODO 追加してください
+                            // 取得したラーメン店情報をRamenItemオブジェクト
+                            // にSet
                             item.set_id(data.getString("id"));
                             item.set_ramenImage(data.getString("image"));
                             item.set_name(data.getString("name"));
-                            item.set_address_pre(data.getString("prefecture"));
-                            item.set_address_reg(data.getString("region"));
-                            item.set_nearest_sta(data.getString("station"));
+                            item.set_prefecture(data.getString("prefecture"));
+                            item.set_region(data.getString("region"));
+                            item.set_station(data.getString("station"));
                             item.set_tag(data.getString("tag"));
-                            item.set_address_add(data.getString("address"));
+                            item.set_address(data.getString("address"));
                             item.set_tel(data.getString("tel"));
 
                             itemLst.add(item);
@@ -91,6 +96,7 @@ public class ServerApiCall {
     }
 
 
+    //ラーメン店Reviewを取得
     public void CallStoreReview(final Listener l, AppController app, Map<String, String> params){
 
         GetRequest request = new GetRequest(new Response.Listener<String>() {
@@ -108,13 +114,14 @@ public class ServerApiCall {
                         RamenReview item = new RamenReview();
                         String key = keys.next();
                         JSONObject data = info.getJSONObject(key);
+                        //取得した譲歩をRamenReviewオブジェクトにSet
                         item.set_id(data.getString("id"));
                         item.set_review(data.getString("review"));
-                        item.setShop_id(data.getString("shop_id"));
-                        item.setUser_name(data.getString("user_name"));
-                        item.setCreated_at(data.getString("created_at"));
-                        item.setUpdated_at(data.getString("updated_at"));
-                        item.setRank(data.getString("rank"));
+                        item.set_shop_id(data.getString("shop_id"));
+                        item.set_user_name(data.getString("user_name"));
+                        item.set_created_at(data.getString("created_at"));
+                        item.set_updated_at(data.getString("updated_at"));
+                        item.set_rank(data.getString("rank"));
                         reviewLst.add(item);
 
                     }
@@ -135,6 +142,7 @@ public class ServerApiCall {
 
     }
 
+    //ラーメン店Review投稿用メソッド
     public void AddStoreReview(final Listener l, AppController app, Map<String, String> params){
         GetRequest request = new GetRequest(new Response.Listener<String>() {
             @Override

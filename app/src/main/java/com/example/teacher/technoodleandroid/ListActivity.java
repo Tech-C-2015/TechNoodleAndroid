@@ -122,7 +122,7 @@ public class ListActivity extends ActionBarActivity {
         // リストデータをAdapterへ設定
         RamenItem ite = new RamenItem();
         ite.set_name("kato");
-       RamenLst.add(ite);
+        RamenLst.add(ite);
 //        RamenLst.add(new RamenItem(1,"sato", null, null, null, null, null));
 //        RamenLst.add(new RamenItem(2,tmp, null, null, null, null, null));
 

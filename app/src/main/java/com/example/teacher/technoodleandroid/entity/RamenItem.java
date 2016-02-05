@@ -5,12 +5,60 @@ package com.example.teacher.technoodleandroid.entity;
  */
 public class RamenItem {
 
+    //ラーメン店情報を格納するクラス
     private String _id;
     private String _ramenImage;
     private String _name;
-    private String _address_pre;
-    private String _address_reg;
-    private String _nearest_sta;
+    private String _prefecture;
+    private String _region;
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public String get_ramenImage() {
+        return _ramenImage;
+    }
+
+    public void set_ramenImage(String _ramenImage) {
+        this._ramenImage = _ramenImage;
+    }
+
+    public String get_name() {
+        return _name;
+    }
+
+    public void set_name(String _name) {
+        this._name = _name;
+    }
+
+    public String get_prefecture() {
+        return _prefecture;
+    }
+
+    public void set_prefecture(String _prefecture) {
+        this._prefecture = _prefecture;
+    }
+
+    public String get_region() {
+        return _region;
+    }
+
+    public void set_region(String _region) {
+        this._region = _region;
+    }
+
+    public String get_station() {
+        return _station;
+    }
+
+    public void set_station(String _station) {
+        this._station = _station;
+    }
 
     public String get_tel() {
         return _tel;
@@ -20,66 +68,29 @@ public class RamenItem {
         this._tel = _tel;
     }
 
-    private String _tel;
-
-    public String get_address_add() {
-        return _address_add;
+    public String get_address() {
+        return _address;
     }
 
-    public void set_address_add(String _address_add) {
-        this._address_add = _address_add;
+    public void set_address(String _address) {
+        this._address = _address;
     }
 
-    private String _address_add;
-    private String _tag;
-
-    public String getId(){ return _id;}
-
-    public String getName() {
-        return _name;
-    }
-
-    public String getRamenImage(){
-        return _ramenImage;
-    }
-
-
-    public String getAddressPre(){ return _address_pre; }
-
-    public String getAddressReg(){ return _address_reg; }
-
-    public String getNearestSta(){ return _nearest_sta; }
-
-    public String getTag(){ return _tag; }
-
-    public RamenItem(){}
-
-
-    public void set_id(String _id) {
-        this._id = _id;
+    public String get_tag() {
+        return _tag;
     }
 
     public void set_tag(String _tag) {
         this._tag = _tag;
     }
 
-    public void set_nearest_sta(String _nearest_sta) {
-        this._nearest_sta = _nearest_sta;
+    private String _station;
+    private String _tel;
+    private String _address;
+    private String _tag;
+
+    public RamenItem() {
     }
 
-    public void set_address_reg(String _address_reg) {
-        this._address_reg = _address_reg;
-    }
 
-    public void set_address_pre(String _address_pre) {
-        this._address_pre = _address_pre;
-    }
-
-    public void set_name(String _name) {
-        this._name = _name;
-    }
-
-    public void set_ramenImage(String _ramenImage) {
-        this._ramenImage = _ramenImage;
-    }
 }
