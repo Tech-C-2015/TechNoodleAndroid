@@ -134,42 +134,6 @@ public class RamenItemAdapter extends BaseAdapter {
 
        holder.txtName.setText(item.get_name());
        holder.rImage.setImageBitmap(item.get_ramenBitmap());
-/*
-        final ImageView image_view = holder.rImage;
-        AsyncTask<String, Void, Bitmap> async = new AsyncTask<String, Void, Bitmap>(){
-
-
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                super.onPostExecute(bitmap);
-
-                if(bitmap != null)
-                image_view.setImageBitmap(bitmap);
-
-            }
-
-            @Override
-            protected Bitmap doInBackground(String... strings) {
-                Bitmap image;
-                try {
-                    URL imageUrl = new URL(strings[0]);
-                    InputStream imageIs;
-                    imageIs = imageUrl.openStream();
-                    image = BitmapFactory.decodeStream(imageIs);
-
-                }catch(MalformedURLException e){
-                    image = null;
-                }catch(IOException e){
-                    image = null;
-                }
-                return image;
-            }
-        }.execute(item.get_ramenImage());
-
-*/
-
-       // holder.rImage.setImageBitmap(image);
-        // holder.rImage.setImageDrawable(item.getRamenImage().getDrawable());
 
         return convertView;
     }

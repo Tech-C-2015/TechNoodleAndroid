@@ -15,14 +15,21 @@ public class GeocoderManager {
 
     private Geocoder mGeocoder = null;
     private List<Address> mList_address = null;
+    final static int FULL_ADDRESS = 0;
+    final static int PREFECTURE = 1;
+    final static int SHICYOSON = 2;
+    final static int GUN = 3;
+    final static int TYOME = 4;
+    final static int BANCHI = 5;
+    final static int GOU = 6;
 
     public GeocoderManager(Context context){
         mGeocoder = new Geocoder(context, Locale.JAPAN);
     }
 
-    public String getAddressFromGeocode(double latitude, double longitude){
+    public String[] getAddressFromGeocode(double latitude, double longitude){
 
-        String address_string = null;
+        String address_string[] = new String[7];
 
         try {
             mList_address = mGeocoder.getFromLocation(latitude, longitude, 5);
@@ -33,36 +40,21 @@ public class GeocoderManager {
         if (!mList_address.isEmpty()){
 
             Address address = mList_address.get(0);
-            StringBuilder strbuid = new StringBuilder();
-
-            //addressをStringへ
-            String buf;
-            String[] str_add = new String[3];
-
-            str_add[0] = address.getAdminArea();
-            //str_add[1] = address.get
-
-            strbuid.append(address.getAddressLine(1));
-                strbuid.append(address.getAdminArea());//都道府県
-                strbuid.append(address.getFeatureName());//号
-  //          strbuid.append(address.getPremises());//不明
-            strbuid.append(address.getSubLocality());//町名
-            strbuid.append(address.getCountryName());////国名
-            strbuid.append(address.getExtras());
-//          strbuid.append(address.getSubAdminArea());//不明
-//            strbuid.append(address.getSubThoroughfare());//不明
-            strbuid.append(address.getThoroughfare());//丁目
 
 
-
-
-            address_string = strbuid.toString();
+            address_string[FULL_ADDRESS] = address.getAddressLine(1);
+            address_string[PREFECTURE] = address.getAdminArea();
+            address_string[SHICYOSON] = address.getLocality();
+            address_string[GUN] = address.getSubAdminArea();
+            address_string[TYOME] = address.getThoroughfare();
+            address_string[BANCHI] = address.getSubThoroughfare();
+            address_string[GOU] = address.getFeatureName();
 
         }
 
         //失敗（Listが空だったら）
         else {
-
+            address_string[0] = "failed to get address from geocode!";
         }
 
         return address_string;

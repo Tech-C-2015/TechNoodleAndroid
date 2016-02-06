@@ -25,6 +25,7 @@ public class ServerApiCall {
         void onFinish(T obj);
     }
 
+
     //ラーメン店情報取得用UR
     private static final String RamenItemURL = "http://133.130.106.164/Tech-Noodle-Api/public/noodle/list";
 
@@ -78,8 +79,6 @@ public class ServerApiCall {
                                 */
 
                         }
-
-
 
                     l.onFinish(itemLst);
 

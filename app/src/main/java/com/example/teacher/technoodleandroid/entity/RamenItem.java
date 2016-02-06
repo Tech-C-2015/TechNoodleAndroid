@@ -25,6 +25,7 @@ public class RamenItem {
     }
 
     public void set_ramenBitmap() {
+
             Bitmap image;
         if(this.get_ramenImage() != null) {
             try {
@@ -38,6 +39,7 @@ public class RamenItem {
             } catch (IOException e) {
                 image = null;
             }
+
             this._ramenBitmap = image;
         }
     }

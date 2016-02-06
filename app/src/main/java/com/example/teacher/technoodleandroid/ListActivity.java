@@ -10,6 +10,7 @@ import com.example.teacher.technoodleandroid.adapter.RamenItemAdapter;
 import com.example.teacher.technoodleandroid.client.ServerApiCall;
 import com.example.teacher.technoodleandroid.entity.CreateParams;
 import com.example.teacher.technoodleandroid.entity.RamenItem;
+import com.example.teacher.technoodleandroid.util.GeocoderManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,35 +38,6 @@ public class ListActivity extends ActionBarActivity {
 
         final RamenItemAdapter adapter  = new RamenItemAdapter(this);
 
-        CreateParams mParams = new CreateParams();
-        mParams.CreateRamenItemParam();
-        mParams.setRegion("新宿区");
-
-        new ServerApiCall().callStoreList(new ServerApiCall.Listener<List<RamenItem>>() {
-            @Override
-            public void onFinish(List<RamenItem> obj) {
-
-                if (obj == null) return;
-
-                //String id = obj.get(0).getId();
-                for(RamenItem ramen: obj){
-
-                    AsyncTask<List<RamenItem>, Void, List<RamenItem>> async = new AsyncTask<List<RamenItem>, Void, List<RamenItem>>(){
-
-                        @Override
-                        protected List<RamenItem> doInBackground(List<RamenItem>... ramens) {
-                           for(RamenItem ramen: ramens[0]){
-                               ramen.set_ramenBitmap();
-                           }
-
-                            return ramens[0];
-                        }
-                    };
-                }
-                adapter.addLst(obj);
-
-            }
-        }, (AppController) ListActivity.this.getApplication(), mParams.getParams());
 
 
          dataLoadAdapter(adapter);
@@ -109,6 +81,7 @@ public class ListActivity extends ActionBarActivity {
                         if (mSwipeListRamen.isRefreshing())
                             mSwipeListRamen.setRefreshing(false);
                             */
+                        return;
                     }
                 });
 
@@ -119,27 +92,94 @@ public class ListActivity extends ActionBarActivity {
     // リストデータ生成
    final List<RamenItem> RamenLst = new ArrayList<>();
 
+    final static int FULL_ADDRESS = 0;
+    final static int PREFECTURE = 1;
+    final static int SHICYOSON = 2;
+    final static int GUN = 3;
+    final static int TYOME = 4;
+    final static int BANCHI = 5;
+    final static int GOU = 6;
 
+    //一度あたりの数値（300M）
+    final static double gps_to_metar = 0.00277778;
     //Ramenデータのローダー
     public RamenItemAdapter dataLoadAdapter(final RamenItemAdapter adapter) {
 
         // リストデータ組立
         //ここの時点でAPIからラーメン情報を取得
 
-     //   GeocoderManager geocode_manager = new GeocoderManager(this);
+       GeocoderManager geocode_manager = new GeocoderManager(this);
+        double latitude;
+        double longitude;
 
-      //  String tmp = geocode_manager.getAddressFromGeocode(43.06311, 141.353);
+        latitude = 43.06311;
+        longitude =141.353;
+
+
+       String[] tmp = geocode_manager.getAddressFromGeocode(43.06311, 141.353);
+      // String[] tmp1 = geocode_manager.getAddressFromGeocode();
+
+       String gps_prefecture = tmp[PREFECTURE];
+       String gps_region = tmp[SHICYOSON];
+       String gps_address;
+
+        StringBuilder strbuild = new StringBuilder();
+        if(tmp[GUN] != null)
+           strbuild.append(tmp[GUN]);
+        strbuild.append(tmp[TYOME]);
+        strbuild.append(tmp[BANCHI]);
+        strbuild.append(tmp[GOU]);
+        gps_address = strbuild.toString();
+
+
+
+
 
         //RamenItemListにデータを追加
 
         // リストデータをAdapterへ設定
-        RamenItem ite = new RamenItem();
-        ite.set_name("kato");
-        RamenLst.add(ite);
+       RamenItem ite = new RamenItem();
+       ite.set_name(tmp[0]);
+      // RamenLst.add(ite);
 //        RamenLst.add(new RamenItem(1,"sato", null, null, null, null, null));
-//        RamenLst.add(new RamenItem(2,tmp, null, null, null, null, null));
+      //RamenLst.add(new RamenItem(2,tmp, null, null, null, null, null));
 
 
+        CreateParams mParams = new CreateParams();
+        mParams.CreateRamenItemParam();
+        mParams.setRegion("新宿区");
+
+
+        new ServerApiCall().callStoreList(new ServerApiCall.Listener<List<RamenItem>>() {
+            @Override
+            public void onFinish(List<RamenItem> obj) {
+
+                if (obj == null) return;
+
+                for(RamenItem ramen: obj) {
+                    RamenLst.add(ramen);
+                }
+                //String id = obj.get(0).getId();
+                for(RamenItem ramen: obj){
+
+                    AsyncTask<List<RamenItem>, Void, List<RamenItem>> async = new AsyncTask<List<RamenItem>, Void, List<RamenItem>>(){
+
+                        @Override
+                        protected List<RamenItem> doInBackground(List<RamenItem>... ramens) {
+
+
+                            for(RamenItem ramen: ramens[0]){
+                                ramen.set_ramenBitmap();
+                            }
+
+                            return ramens[0];
+                        }
+                    }.execute(obj);
+                }
+                adapter.addLst(obj);
+
+            }
+        }, (AppController) ListActivity.this.getApplication(), mParams.getParams());
 
         adapter.addLst(RamenLst);
 
