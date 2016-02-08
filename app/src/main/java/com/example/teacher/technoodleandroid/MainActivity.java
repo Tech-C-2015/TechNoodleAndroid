@@ -2,27 +2,107 @@ package com.example.teacher.technoodleandroid;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.example.teacher.technoodleandroid.util.GetRequest;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class MainActivity extends ActionBarActivity {
-    EditText editWord;
+    private Spinner selectSpinner1;
+    private Spinner selectSpinner2;
+    private Spinner selectSpinner3;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Spinnerの設定
+        ArrayAdapter<CharSequence> adapter1 =
+                ArrayAdapter.createFromResource(this, R.array.flavor,
+                        android.R.layout.simple_spinner_item);
+
+        ArrayAdapter<CharSequence> adapter2 =
+                ArrayAdapter.createFromResource(this, R.array.low,
+                        android.R.layout.simple_spinner_item);
+
+        ArrayAdapter<CharSequence> adapter3 =
+                ArrayAdapter.createFromResource(this, R.array.high,
+                        android.R.layout.simple_spinner_item);
+        /*
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item);
+        adapter.add("Sample0");
+        adapter.add("Sample1");
+        adapter.add("Sample2");
+        adapter.add("Sample3");
+        adapter.add("Sample4");
+        */
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        selectSpinner1 = (Spinner) findViewById(R.id.spinner1);
+        selectSpinner1.setAdapter(adapter1);
+        selectSpinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Spinner spinner = (Spinner) parent;
+                showToast(Integer.toString(spinner.getSelectedItemPosition()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        selectSpinner2 = (Spinner) findViewById(R.id.spinner2);
+        selectSpinner2.setAdapter(adapter2);
+        selectSpinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Spinner spinner = (Spinner) parent;
+                showToast(Integer.toString(spinner.getSelectedItemPosition()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        selectSpinner3 = (Spinner) findViewById(R.id.spinner3);
+        selectSpinner3.setAdapter(adapter3);
+        selectSpinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Spinner spinner = (Spinner) parent;
+                showToast(Integer.toString(spinner.getSelectedItemPosition()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        // ボタンの設定
+        Button buttonCheckSelected;
+        buttonCheckSelected = (Button)findViewById(R.id.button1);
+        buttonCheckSelected.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                showToast((String)selectSpinner1.getSelectedItem());
+                showToast((String)selectSpinner2.getSelectedItem());
+                showToast((String)selectSpinner3.getSelectedItem());
+            }
+        });
+    }
+
+    private void showToast(String str) {
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+    }
+/*    EditText editWord;
     TextView txtResult;
     Button btnGet;
 
@@ -108,4 +188,6 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+}
+*/
 }
