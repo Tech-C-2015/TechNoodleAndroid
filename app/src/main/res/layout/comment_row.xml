@@ -14,7 +14,7 @@
             android:text="食べたラーメン"/>
 
         <TextView
-            android:id="@+id/noodle"
+            android:id="@+id/taste"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
@@ -57,7 +57,7 @@
                 android:id="@+id/evaluation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hyouka"
+                android:text="コメント"
                 android:layout_weight="1"/>
             <TextView
                 android:id="@+id/comment_date"
