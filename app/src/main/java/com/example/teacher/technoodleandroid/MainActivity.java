@@ -18,6 +18,7 @@ public class MainActivity extends ActionBarActivity {
     EditText editWord;
     TextView txtResult;
     Button btnGet;
+    Button btnComment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +36,24 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        btnComment = (Button)findViewById(R.id.btn_comment);
+        btnComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                comment(v);
+            }
+        });
 
     }
 
     //get送信
     protected void getBtn(View view) {
-        startActivity(new Intent(getApplication(),ListActivity.class));
+        startActivity(new Intent(getApplication(), ListActivity.class));
+    }
+
+    void comment(View view){
+        Intent intent = new Intent(MainActivity.this,CommentActivity.class);
+        startActivity(intent);
     }
 
     //editwordからMapにkeyとvalueのセット

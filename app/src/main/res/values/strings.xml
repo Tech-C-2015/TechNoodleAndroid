@@ -4,7 +4,9 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_list">おすすめ</string>
+    <string name="title_commentActivity">店名</string>
 
+    <string name="comment_dialog_title">コメント</string>
     <!-- スピナーの中身です -->
     <string-array name="noodle">
         <item>味噌</item>
