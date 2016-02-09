@@ -116,7 +116,7 @@ public class ListActivity extends ActionBarActivity {
         // リストデータ組立
         //ここの時点でAPIからラーメン情報を取得
 
-       GeocoderManager geocode_manager = new GeocoderManager(this);
+       final GeocoderManager geocode_manager = new GeocoderManager(this);
 
         double latitude;
         double longitude;
@@ -127,18 +127,24 @@ public class ListActivity extends ActionBarActivity {
 
       // String[] tmp1 = geocode_manager.getAddressFromGeocode();
 
-       String original_gps_prefecture = area_gps[geocode_manager.ORIGINAL][PREFECTURE];
-       String original_gps_region = area_gps[geocode_manager.ORIGINAL][SHICYOSON];
-       String original_gps_address;
+        final String[] gps_prefecture = new String[5];
+        final String[] gps_region = new String[5];
+        final String[] gps_address = new String[5];
+       for(int i=0; i<5; i++) {
+           gps_prefecture[i] = area_gps[i][PREFECTURE];
+           gps_region[i] = area_gps[i][SHICYOSON];
 
-        StringBuilder strbuild = new StringBuilder();
-        if(area_gps[geocode_manager.ORIGINAL][GUN] != null) {
-            strbuild.append(area_gps[geocode_manager.ORIGINAL][GUN]);
-        }
-        strbuild.append(area_gps[geocode_manager.ORIGINAL][TYOME]);
-       // strbuild.append(area_gps[geocode_manager.ORIGINAL][BANCHI]);
-       // strbuild.append(area_gps[geocode_manager.ORIGINAL][GOU]);
-       original_gps_address = strbuild.toString();
+
+           StringBuilder strbuild = new StringBuilder();
+           if (area_gps[geocode_manager.ORIGINAL][GUN] != null) {
+               strbuild.append(area_gps[geocode_manager.ORIGINAL][GUN]);
+           }
+           strbuild.append(area_gps[geocode_manager.ORIGINAL][TYOME]);
+           // strbuild.append(area_gps[geocode_manager.ORIGINAL][BANCHI]);
+           // strbuild.append(area_gps[geocode_manager.ORIGINAL][GOU]);
+           gps_address[i] = strbuild.toString();
+       }
+
 
 
 
@@ -156,7 +162,7 @@ public class ListActivity extends ActionBarActivity {
 
         CreateParams mParams = new CreateParams();
         mParams.CreateRamenItemParam();
-       mParams.setRegion(original_gps_region);
+       mParams.setRegion(gps_region[geocode_manager.ORIGINAL]);
         //mParams.setAddress(original_gps_address);
 
 
@@ -168,7 +174,15 @@ public class ListActivity extends ActionBarActivity {
 
                 if (obj == null) return;
 
+                List<RamenItem> tmp;
                 for(RamenItem ramen: obj) {
+                  /*
+                    if(ramen.get_address().indexOf(gps_address[geocode_manager.ORIGINAL]) != -1
+                    || ramen.get_address().indexOf(gps_address[geocode_manager.NORTH]) != -1
+                    || ramen.get_address().indexOf(gps_address[geocode_manager.SOUTH]) != -1
+                    || ramen.get_address().indexOf(gps_address[geocode_manager.WEST]) != -1
+                    || ramen.get_address().indexOf(gps_address[geocode_manager.EAST]) != -1)
+                    */
                     RamenLst.add(ramen);
                 }
                 //String id = obj.get(0).getId();

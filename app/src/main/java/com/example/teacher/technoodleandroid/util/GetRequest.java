@@ -2,6 +2,7 @@ package com.example.teacher.technoodleandroid.util;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+
 import java.util.Map;
 
 public class GetRequest extends StringRequest {
@@ -30,6 +31,7 @@ public class GetRequest extends StringRequest {
         for (Map.Entry<String, String> entry : mParams.entrySet()) {
             if (isFirst) {
                 param += entry.getKey() + "=" + entry.getValue();
+                isFirst = false;
             } else {
                 param += "&" + entry.getKey() + "=" + entry.getValue();
             }
