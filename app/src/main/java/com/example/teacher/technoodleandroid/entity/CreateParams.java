@@ -71,16 +71,13 @@ public class CreateParams {
     }
 
     public void setLimit(String limit){
-        if( CheckTypeItem()) {
             setParameter("limit", limit);
-        }
 
     }
 
     public void setOffset(String offset){
-        if( CheckTypeItem()) {
             setParameter("offset", offset);
-        }
+
     }
 
     //ラーメン店Review投稿用パラメータ作成
