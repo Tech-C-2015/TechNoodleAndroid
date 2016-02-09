@@ -22,6 +22,14 @@ public class GeocoderManager {
     final static int TYOME = 4;
     final static int BANCHI = 5;
     final static int GOU = 6;
+    final static double gps_to_metar = 0.000277778;
+    final static double latitude_const = 30.8184;
+    final static double longitude_const = 25.2450;
+    final static public int ORIGINAL = 0;
+    final static public int NORTH = 1;
+    final static public int SOUTH = 2;
+    final static public int WEST = 3;
+    final static public int EAST = 4;
 
     public GeocoderManager(Context context){
         mGeocoder = new Geocoder(context, Locale.JAPAN);
@@ -84,4 +92,30 @@ public class GeocoderManager {
 
 
 
+    public String[][] getAreaAddressFromGeocode(double latitude, double longitude, int area_as_metar){
+
+
+
+        double to_north_300m_latitude = latitude + (area_as_metar / latitude_const * gps_to_metar);
+        double to_north_300m_longitude = longitude;
+        double to_south_300m_latitude = latitude - (area_as_metar / latitude_const * gps_to_metar);
+        double to_south_300m_longitude = longitude;
+        double to_west_300m_latitude = latitude;
+        double to_west_300m_longitude = longitude + (area_as_metar / longitude_const * gps_to_metar);
+        double to_east_300m_latitude = latitude;
+        double to_east_300m_longitude = longitude - (area_as_metar / longitude_const * gps_to_metar);
+
+        String[] original_gps2address = getAddressFromGeocode(latitude, longitude);
+        String[] to_north_gps2address = getAddressFromGeocode(to_north_300m_latitude, to_north_300m_longitude);
+        String[] to_south_gps2address = getAddressFromGeocode(to_south_300m_latitude, to_south_300m_longitude);
+        String[] to_west_gps2address = getAddressFromGeocode(to_west_300m_latitude, to_west_300m_longitude);
+        String[] to_east_gps2address = getAddressFromGeocode(to_east_300m_latitude, to_east_300m_longitude);
+
+        String[][] area_address = new String[][]{
+                original_gps2address, to_north_gps2address, to_south_gps2address, to_west_gps2address, to_east_gps2address
+        };
+
+        return area_address;
+
+    }
 }

@@ -16,11 +16,8 @@
         <TextView
             android:id="@+id/item_name"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"></TextView>
-        <TextView
-            android:id="@+id/item_cost"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"></TextView>
+            android:layout_width="match_parent"
+            android:gravity="center"></TextView>
 
     </LinearLayout>
 </LinearLayout>

@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.teacher.technoodleandroid.adapter.RamenItemAdapter;
@@ -47,31 +49,33 @@ public class ListActivity extends ActionBarActivity {
 
 
 
-        /*
-        // Listviewのクリックイベント
+
+        //Listviewのクリックイベント
         mListRamen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 // リストからクリックされたitemを取得
                 RamenItem item = RamenLst.get(position);
-
+/*
                 // 画面遷移
                 Intent intent =
                         new Intent(ListActivity.this,
-                                item.getActivityClass());
+                                );
+                intent.putExtra("item", item.get_id());
                 startActivity(intent);
+*/
             }
         });
-        */
+
 
         // Listviewをpullして追加するデータイベント
-        mSwipeListRamen.setOnRefreshListener(
+     /*   mSwipeListRamen.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
 
-/*
+
                         // 更新内容
                         addDataAdapter(adapter, null);
 
@@ -80,11 +84,11 @@ public class ListActivity extends ActionBarActivity {
 
                         if (mSwipeListRamen.isRefreshing())
                             mSwipeListRamen.setRefreshing(false);
-                            */
+
                         return;
                     }
                 });
-
+*/
 
 
     }
@@ -101,7 +105,11 @@ public class ListActivity extends ActionBarActivity {
     final static int GOU = 6;
 
     //一度あたりの数値（300M）
-    final static double gps_to_metar = 0.00277778;
+    final static double gps_to_metar = 0.000277778;
+    final static double latitude_const = 30.8184;
+    final static double longitude_const = 25.2450;
+    final static int gps_area_as_metar = 300;
+
     //Ramenデータのローダー
     public RamenItemAdapter dataLoadAdapter(final RamenItemAdapter adapter) {
 
@@ -109,27 +117,28 @@ public class ListActivity extends ActionBarActivity {
         //ここの時点でAPIからラーメン情報を取得
 
        GeocoderManager geocode_manager = new GeocoderManager(this);
+
         double latitude;
         double longitude;
 
         latitude = 43.06311;
         longitude =141.353;
+        String[][] area_gps = geocode_manager.getAreaAddressFromGeocode(latitude, longitude, gps_area_as_metar);
 
-
-       String[] tmp = geocode_manager.getAddressFromGeocode(43.06311, 141.353);
       // String[] tmp1 = geocode_manager.getAddressFromGeocode();
 
-       String gps_prefecture = tmp[PREFECTURE];
-       String gps_region = tmp[SHICYOSON];
-       String gps_address;
+       String original_gps_prefecture = area_gps[geocode_manager.ORIGINAL][PREFECTURE];
+       String original_gps_region = area_gps[geocode_manager.ORIGINAL][SHICYOSON];
+       String original_gps_address;
 
         StringBuilder strbuild = new StringBuilder();
-        if(tmp[GUN] != null)
-           strbuild.append(tmp[GUN]);
-        strbuild.append(tmp[TYOME]);
-        strbuild.append(tmp[BANCHI]);
-        strbuild.append(tmp[GOU]);
-        gps_address = strbuild.toString();
+        if(area_gps[geocode_manager.ORIGINAL][GUN] != null) {
+            strbuild.append(area_gps[geocode_manager.ORIGINAL][GUN]);
+        }
+        strbuild.append(area_gps[geocode_manager.ORIGINAL][TYOME]);
+       // strbuild.append(area_gps[geocode_manager.ORIGINAL][BANCHI]);
+       // strbuild.append(area_gps[geocode_manager.ORIGINAL][GOU]);
+       original_gps_address = strbuild.toString();
 
 
 
@@ -139,7 +148,7 @@ public class ListActivity extends ActionBarActivity {
 
         // リストデータをAdapterへ設定
        RamenItem ite = new RamenItem();
-       ite.set_name(tmp[0]);
+       //ite.set_name(geocode_manager.ORIGINAL[0]);
       // RamenLst.add(ite);
 //        RamenLst.add(new RamenItem(1,"sato", null, null, null, null, null));
       //RamenLst.add(new RamenItem(2,tmp, null, null, null, null, null));
@@ -147,7 +156,10 @@ public class ListActivity extends ActionBarActivity {
 
         CreateParams mParams = new CreateParams();
         mParams.CreateRamenItemParam();
-        mParams.setRegion("新宿区");
+       mParams.setRegion(original_gps_region);
+        //mParams.setAddress(original_gps_address);
+
+
 
 
         new ServerApiCall().callStoreList(new ServerApiCall.Listener<List<RamenItem>>() {
