@@ -4,4 +4,35 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_list">おすすめ</string>
+
+    <!-- スピナーの中身です -->
+    <string-array name="noodle">
+        <item>味噌</item>
+        <item>shoyu</item>
+        <item>tonkotsu</item>
+        <item>shio</item>
+    </string-array>
+    <string-array name="topping">
+        <item>無し</item>
+        <item>oomori</item>
+        <item>butter</item>
+        <item>egg</item>
+        <item>menma</item>
+        <item>wakame</item>
+    </string-array>
+    <string-array name="price">
+        <item>500円</item>
+        <item>550円</item>
+        <item>600円</item>
+        <item>650円</item>
+        <item>700円</item>
+        <item>750円</item>
+        <item>800円</item>
+        <item>850円</item>
+        <item>900円</item>
+        <item>950円</item>
+        <item>1000円</item>
+    </string-array>
+
+
 </resources>
