@@ -1,5 +1,6 @@
 package com.example.teacher.technoodleandroid;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -7,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.teacher.technoodleandroid.adapter.RamenItemAdapter;
 import com.example.teacher.technoodleandroid.client.ServerApiCall;
@@ -57,16 +59,15 @@ public class ListActivity extends ActionBarActivity {
 
                 // リストからクリックされたitemを取得
                 RamenItem item = RamenLst.get(position);
-/*
+
                 // 画面遷移
-                Intent intent =
-                        new Intent(ListActivity.this,
-                                );
+                Intent intent = new Intent(ListActivity.this,CommentActivity.class);
                 intent.putExtra("item", item.get_id());
                 startActivity(intent);
-*/
+
             }
         });
+
 
 
         // Listviewをpullして追加するデータイベント
@@ -91,6 +92,9 @@ public class ListActivity extends ActionBarActivity {
 */
 
 
+    }
+    private void showToast(String s){
+        Toast.makeText(this, "toast+" + s, Toast.LENGTH_LONG).show();
     }
 
     // リストデータ生成

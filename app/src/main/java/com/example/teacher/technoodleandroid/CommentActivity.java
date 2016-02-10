@@ -45,18 +45,18 @@ public class CommentActivity extends ActionBarActivity {
         findViews();
         setAdapters();
 
-        // ‰Ÿ‚³‚ê‚½‚çcomment_dialog‚ğ‹N“®‚·‚éƒ{ƒ^ƒ“
+        // æŠ¼ã•ã‚ŒãŸã‚‰comment_dialogã‚’èµ·å‹•ã™ã‚‹ãƒœã‚¿ãƒ³
         final Button comment_button = (Button)findViewById(R.id.comment_button);
         comment_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 commentDialog();
             }
         });
-        // mapƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚Ìˆ—
+        // mapãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸæ™‚ã®å‡¦ç†
         final Button map_button = (Button)findViewById(R.id.map_button);
         map_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // –¾¦“Iintent ‚ÅMAP‹N“®
+                // æ˜ç¤ºçš„intent ã§MAPèµ·å‹•
                 Uri uri = Uri.parse("geo:0,0?q=" + "");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
@@ -87,25 +87,25 @@ public class CommentActivity extends ActionBarActivity {
         return true;
     }
 
-    // ƒRƒƒ“ƒgƒ_ƒCƒAƒƒOİ’è
+    // ã‚³ãƒ¡ãƒ³ãƒˆãƒ€ã‚¤ã‚¢ãƒ­ã‚°è¨­å®š
     private void commentDialog(){
-        // ƒJƒXƒ^ƒ€ƒrƒ…[‚ğİ’è
+        // ã‚«ã‚¹ã‚¿ãƒ ãƒ“ãƒ¥ãƒ¼ã‚’è¨­å®š
         LayoutInflater inflater = (LayoutInflater)this.getSystemService(LAYOUT_INFLATER_SERVICE);
         final View layout = inflater.inflate(R.layout.comment_dialog, (ViewGroup)findViewById(R.id.comment_dialog));
 
-        // ƒAƒ‰[ƒgƒ_ƒCƒAƒƒO ‚ğ¶¬
+        // ã‚¢ãƒ©ãƒ¼ãƒˆãƒ€ã‚¤ã‚¢ãƒ­ã‚° ã‚’ç”Ÿæˆ
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.comment_dialog_title);
         builder.setView(layout);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                // ƒIƒuƒWƒFƒNƒgæ“¾
+                // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå–å¾—
                 Spinner taste = (Spinner)layout.findViewById(R.id.spi_taste);
                 Spinner tooping = (Spinner)layout.findViewById(R.id.spi_topping);
                 Spinner price = (Spinner)layout.findViewById(R.id.spi_price);
                 EditText comment = (EditText)layout.findViewById(R.id.noodle_comment);
 
-                // ƒIƒuƒWƒFƒNƒg‚Ì’l‚ğæ“¾‚µ‚ÄString‚É
+                // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å€¤ã‚’å–å¾—ã—ã¦Stringã«
                 strTaste = taste.getSelectedItem().toString();
                 strTopping = tooping.getSelectedItem().toString();
                 strPrice = price.getSelectedItem().toString();
@@ -116,15 +116,15 @@ public class CommentActivity extends ActionBarActivity {
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                // Cancel ƒ{ƒ^ƒ“ˆ—
+                // Cancel ãƒœã‚¿ãƒ³å‡¦ç†
 
             }
         });
 
-        // •\¦
+        // è¡¨ç¤º
         builder.create().show();
     }
-    // Toasto‚·‚¾‚¯
+    // Toastå‡ºã™ã ã‘
     private void showToast(String s){
         Toast.makeText(this, "toast+" + s, Toast.LENGTH_LONG).show();
     }
@@ -134,7 +134,7 @@ public class CommentActivity extends ActionBarActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         adapter.add(s);
 
-        // ƒŠƒXƒgƒrƒ…[‚Éƒf[ƒ^‚ğİ’è
+        // ãƒªã‚¹ãƒˆãƒ“ãƒ¥ãƒ¼ã«ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
         ListView listView1 = (ListView)findViewById(R.id.comment_list);
         listView1.setAdapter(adapter);
     }
