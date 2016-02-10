@@ -92,7 +92,7 @@ public class GeocoderManager {
 
 
 
-    public String[][] getAreaAddressFromGeocode(double latitude, double longitude, int area_as_metar){
+    public String[][] getAreaAddressFromGeocode(double latitude, double longitude, int area_as_metar)throws Exception{
 
 
 
@@ -104,6 +104,7 @@ public class GeocoderManager {
         double to_west_300m_longitude = longitude + (area_as_metar / longitude_const * gps_to_metar);
         double to_east_300m_latitude = latitude;
         double to_east_300m_longitude = longitude - (area_as_metar / longitude_const * gps_to_metar);
+
 
         String[] original_gps2address = getAddressFromGeocode(latitude, longitude);
         String[] to_north_gps2address = getAddressFromGeocode(to_north_300m_latitude, to_north_300m_longitude);

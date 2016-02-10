@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -104,11 +105,11 @@ public class ListActivity extends ActionBarActivity {
                                 //    List<RamenItem> tmp;
                                 for (RamenItem ramen : obj) {
 
-                    if(ramen.get_address().indexOf(gps_address[geocode_manager.ORIGINAL]) != -1
-                    || ramen.get_address().indexOf(gps_address[geocode_manager.NORTH]) != -1
-                    || ramen.get_address().indexOf(gps_address[geocode_manager.SOUTH]) != -1
-                    || ramen.get_address().indexOf(gps_address[geocode_manager.WEST]) != -1
-                    || ramen.get_address().indexOf(gps_address[geocode_manager.EAST]) != -1)
+                    if(ramen.get_address().indexOf(gps_address[GeocoderManager.ORIGINAL]) != -1
+                    || ramen.get_address().indexOf(gps_address[GeocoderManager.NORTH]) != -1
+                    || ramen.get_address().indexOf(gps_address[GeocoderManager.SOUTH]) != -1
+                    || ramen.get_address().indexOf(gps_address[GeocoderManager.WEST]) != -1
+                    || ramen.get_address().indexOf(gps_address[GeocoderManager.EAST]) != -1)
 
                                     RamenLst.add(ramen);
                                 }
@@ -134,9 +135,19 @@ public class ListActivity extends ActionBarActivity {
 
                             }
                         }, (AppController) ListActivity.this.getApplication(), mParams.getParams());
+
+
                         // ListviewのAdapterへ設定
                         mListRamen.setAdapter(adapter);
+/*
+                        new Handler().postDelayed(new Runnable(){
+                            @Override
+                            public void run() {
 
+                                finish();
+                            }
+                        },3000);
+*/
                         if (mSwipeListRamen.isRefreshing()) {
                             mSwipeListRamen.setRefreshing(false);
 
@@ -180,26 +191,35 @@ public class ListActivity extends ActionBarActivity {
 
         latitude = 43.06311;
         longitude = 141.353;
-        String[][] area_gps = geocode_manager.getAreaAddressFromGeocode(latitude, longitude, gps_area_as_metar);
+        String[][] area_gps;
+        try {
+            area_gps = geocode_manager.getAreaAddressFromGeocode(latitude, longitude, gps_area_as_metar);
 
 
-        for (int i = 0; i < 5; i++) {
-            gps_prefecture[i] = area_gps[i][PREFECTURE];
-            gps_region[i] = area_gps[i][SHICYOSON];
+            for (int i = 0; i < 5; i++) {
+                gps_prefecture[i] = area_gps[i][PREFECTURE];
+                gps_region[i] = area_gps[i][SHICYOSON];
 
 
-            StringBuilder strbuild = new StringBuilder();
-            if (area_gps[geocode_manager.ORIGINAL][GUN] != null) {
-                strbuild.append(area_gps[geocode_manager.ORIGINAL][GUN]);
+                StringBuilder strbuild = new StringBuilder();
+                if (area_gps[GeocoderManager.ORIGINAL][GUN] != null) {
+                    strbuild.append(area_gps[GeocoderManager.ORIGINAL][GUN]);
+                }
+                strbuild.append(area_gps[GeocoderManager.ORIGINAL][TYOME]);
+                // strbuild.append(area_gps[geocode_manager.ORIGINAL][BANCHI]);
+                // strbuild.append(area_gps[geocode_manager.ORIGINAL][GOU]);
+                gps_address[i] = strbuild.toString();
             }
-            strbuild.append(area_gps[geocode_manager.ORIGINAL][TYOME]);
-            // strbuild.append(area_gps[geocode_manager.ORIGINAL][BANCHI]);
-            // strbuild.append(area_gps[geocode_manager.ORIGINAL][GOU]);
-            gps_address[i] = strbuild.toString();
+
+            mParams.setRegion(gps_region[GeocoderManager.ORIGINAL]);
+            mParams.setLimit(item_limit.toString());
+
+        }catch(Exception e){
+            Log.e("gecodeError", e.getMessage());
+            area_gps= null;
         }
 
-        mParams.setRegion(gps_region[geocode_manager.ORIGINAL]);
-        mParams.setLimit(item_limit.toString());
+
 
 
         new ServerApiCall().callStoreList(new ServerApiCall.Listener<List<RamenItem>>() {
@@ -241,7 +261,16 @@ public class ListActivity extends ActionBarActivity {
 
             }
         }, (AppController) ListActivity.this.getApplication(), mParams.getParams());
+/*
+//画像のダウンロードの待ち時間はmainスレッドを3秒程度停止
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
 
+                finish();
+            }
+        },3000);
+*/
         adapter.addLst(RamenLst);
 
         return adapter;

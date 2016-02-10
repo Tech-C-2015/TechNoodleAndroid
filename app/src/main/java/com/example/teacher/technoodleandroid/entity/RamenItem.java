@@ -28,7 +28,7 @@ public class RamenItem implements Serializable{
 
     final void serializeBitmap() throws IOException{
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        _ramenBitmap.compress(Bitmap.CompressFormat.PNG, Bitmap.DENSITY_NONE, bout);
+        this._ramenBitmap.compress(Bitmap.CompressFormat.PNG, Bitmap.DENSITY_NONE, bout);
         _bitmapArray = bout.toByteArray();
     }
 
@@ -46,20 +46,24 @@ public class RamenItem implements Serializable{
                 imageIs = imageUrl.openStream();
                 image = BitmapFactory.decodeStream(imageIs);
 
+                this._ramenBitmap = image;
+                try{
+                    this.serializeBitmap();
+                }
+                catch(IOException e){
+                    Log.e("serializedBitmap", e.getMessage());
+                }
             } catch (MalformedURLException e) {
+                Log.e("set_ramenBitampe", e.getMessage());
                 image = null;
             } catch (IOException e) {
+                Log.e("set_ramenBitamp", e.getMessage());
                 image = null;
             }
 
-            this._ramenBitmap = image;
-        }
-        try {
-            this.serializeBitmap();
-        }catch(IOException e){
-            Log.e("Bitmap serialize error", e.getMessage());
 
         }
+
     }
 
     transient private Bitmap _ramenBitmap;

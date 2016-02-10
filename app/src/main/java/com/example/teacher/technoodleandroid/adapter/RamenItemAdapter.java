@@ -133,7 +133,11 @@ public class RamenItemAdapter extends BaseAdapter {
         //　データ設定
 
        holder.txtName.setText(item.get_name());
-       holder.rImage.setImageBitmap(item.get_ramenBitmap());
+       if(item.get_ramenBitmap() != null ) {
+           holder.rImage.setImageBitmap(item.get_ramenBitmap());
+       }else{
+           holder.rImage.setImageResource(R.drawable.no_image);
+       }
 
         return convertView;
     }
