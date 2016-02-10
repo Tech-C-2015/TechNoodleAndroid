@@ -73,9 +73,7 @@ public class CommentActivity extends ActionBarActivity {
         adapter = new ReviewAdapter();
         reviewListView.setAdapter(adapter);
     }
-    protected void getStringReview(){
 
-    }
     protected void addReview(){
         reviewList.add(new Review(strTaste,strTopping,strPrice,strComment));
         adapter.notifyDataSetChanged();
@@ -129,19 +127,6 @@ public class CommentActivity extends ActionBarActivity {
         Toast.makeText(this, "toast+" + s, Toast.LENGTH_LONG).show();
     }
 
-    // comment_list
-    private void comment_add(String s){
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-        adapter.add(s);
-
-        // リストビューにデータを設定
-        ListView listView1 = (ListView)findViewById(R.id.comment_list);
-        listView1.setAdapter(adapter);
-    }
-
-    public void commentView(){
-
-    }
     private class ReviewAdapter extends BaseAdapter{
         @Override
         public int getCount() {
@@ -186,6 +171,9 @@ public class CommentActivity extends ActionBarActivity {
             }
 
             return v;
+        }
+        private class getObject extends Activity{
+            ListActivity la = (ListActivity)getIntent().getSerializableExtra("ramen_object");
         }
     }
 }
