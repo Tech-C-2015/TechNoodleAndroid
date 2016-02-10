@@ -27,6 +27,9 @@
             android:name=".ListActivity"
             android:label="@string/title_activity_list"
            ></activity>
+        <activity
+            android:name=".CommentActivity"
+            android:label="@string/title_commentActivity"></activity>
     </application>
 
 </manifest>
