@@ -1,5 +1,6 @@
 package com.example.teacher.technoodleandroid;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -32,7 +33,7 @@ public class ListActivity extends ActionBarActivity {
     final String[] gps_prefecture = new String[5];
     final String[] gps_region = new String[5];
     final String[] gps_address = new String[5];
-   ;
+
 
 
     //リフレッシュして追加するときのオフセットのカウント用変数
@@ -66,15 +67,20 @@ public class ListActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 // リストからクリックされたitemを取得
-              //  RamenItem item = RamenLst.get(position);
-/*
+                RamenItem item = (RamenItem)adapter.getItem(position);
+               // RamenItem item = RamenLst.get(position);
+
                 // 画面遷移
                 Intent intent =
                         new Intent(ListActivity.this,
-                                );
-                intent.putExtra("item", item.get_id());
+                               CommentActivity.class );
+                //Serializableインターフェイスをimplementsしたクラス
+                //intentからデータを取得する場合は
+                //RamenItem item = (RamenItem)getIntent().getSerializableExtra("item");
+                //と記述する必要がある
+                intent.putExtra("item", item);
                 startActivity(intent);
-*/
+
             }
         });
 

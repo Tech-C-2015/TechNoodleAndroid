@@ -2,29 +2,41 @@ package com.example.teacher.technoodleandroid.entity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
  * Created by student on 2016/01/30.
  */
-public class RamenItem {
+public class RamenItem implements Serializable{
 
     //ラーメン店情報を格納するクラス
+    private static final long serialVersionUID = -6298516694275121291L;
     private String _id;
     private String _ramenImage;
     private String _name;
     private String _prefecture;
     private String _region;
 
+    private byte[] _bitmapArray;
+
+    final void serializeBitmap() throws IOException{
+        ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        _ramenBitmap.compress(Bitmap.CompressFormat.PNG, Bitmap.DENSITY_NONE, bout);
+        _bitmapArray = bout.toByteArray();
+    }
+
     public Bitmap get_ramenBitmap() {
         return _ramenBitmap;
     }
 
-    public void set_ramenBitmap() {
+    public void set_ramenBitmap(){
 
             Bitmap image;
         if(this.get_ramenImage() != null) {
@@ -42,9 +54,15 @@ public class RamenItem {
 
             this._ramenBitmap = image;
         }
+        try {
+            this.serializeBitmap();
+        }catch(IOException e){
+            Log.e("Bitmap serialize error", e.getMessage());
+
+        }
     }
 
-    private Bitmap _ramenBitmap;
+    transient private Bitmap _ramenBitmap;
 
     public String get_id() {
         return _id;

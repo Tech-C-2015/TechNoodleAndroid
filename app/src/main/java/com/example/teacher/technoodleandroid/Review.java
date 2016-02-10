@@ -16,6 +16,22 @@ public class Review {
         this.comment =comment;
     }
 
+    public void setTaste(String taste) {
+        this.taste = taste;
+    }
+
+    public void setTopping(String topping) {
+        this.topping = topping;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public String getTaste(){
         return taste;
     }
