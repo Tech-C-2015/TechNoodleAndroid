@@ -4,6 +4,43 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_list">おすすめ</string>
+
+    <string-array name="flavor">
+        <item>指定なし</item>
+        <item>塩</item>
+        <item>醤油</item>
+        <item>豚骨</item>
+        <item>味噌</item>
+    </string-array>
+
+    <string-array name="low">
+        <item>指定なし</item>
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+        <item>600</item>
+        <item>700</item>
+        <item>800</item>
+        <item>900</item>
+        <item>1000</item>
+    </string-array>
+
+    <string-array name="high">
+        <item>指定なし</item>
+        <item>1100</item>
+        <item>1200</item>
+        <item>1300</item>
+        <item>1400</item>
+        <item>1500</item>
+        <item>1600</item>
+        <item>1700</item>
+        <item>1800</item>
+        <item>1900</item>
+        <item>2000</item>
+    </string-array>
+
     <string name="title_commentActivity">店名</string>
 
     <string name="comment_dialog_title">コメント</string>
@@ -35,6 +72,4 @@
         <item>950円</item>
         <item>1000円</item>
     </string-array>
-
-
 </resources>

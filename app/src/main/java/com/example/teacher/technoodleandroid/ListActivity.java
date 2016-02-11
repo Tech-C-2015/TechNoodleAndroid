@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.teacher.technoodleandroid.adapter.RamenItemAdapter;
 import com.example.teacher.technoodleandroid.client.ServerApiCall;
@@ -183,8 +182,8 @@ public class ListActivity extends ActionBarActivity {
         double latitude;
         double longitude;
 
-        latitude = 43.06311;
-        longitude = 141.353;
+        latitude = 35.687984;
+        longitude = 139.69353;
         String[][] area_gps;
         try {
             area_gps = geocode_manager.getAreaAddressFromGeocode(latitude, longitude, gps_area_as_metar);
@@ -204,7 +203,7 @@ public class ListActivity extends ActionBarActivity {
                 // strbuild.append(area_gps[geocode_manager.ORIGINAL][GOU]);
                 gps_address[i] = strbuild.toString();
             }
-            Toast.makeText(this,gps_address[0], Toast.LENGTH_SHORT).show();
+
             mParams.setRegion(gps_region[GeocoderManager.ORIGINAL]);
             mParams.setLimit(item_limit.toString());
 
