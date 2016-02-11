@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.teacher.technoodleandroid.adapter.RamenItemAdapter;
 import com.example.teacher.technoodleandroid.client.ServerApiCall;
@@ -36,11 +38,11 @@ public class ListActivity extends ActionBarActivity {
     final String[] gps_address = new String[5];
 
 
-
     //リフレッシュして追加するときのオフセットのカウント用変数
     private Integer how_many_refreshies = 0;
     //一度に取得するitemの個数
     private static Integer item_limit = 10;
+    private RelativeLayout list_paranet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +53,14 @@ public class ListActivity extends ActionBarActivity {
         mListRamen = (ListView) findViewById(R.id.listRamen);
         mSwipeListRamen = (SwipeRefreshLayout) findViewById(R.id.swipeListRamen);
         mParams.CreateRamenItemParam();
-        final GeocoderManager geocode_manager =  new GeocoderManager(this);
-
+        final GeocoderManager geocode_manager = new GeocoderManager(this);
+        list_paranet = (RelativeLayout) findViewById(R.id.parentListview);
 
         final RamenItemAdapter adapter = new RamenItemAdapter(this);
 
 
         dataLoadAdapter(adapter);
+
         // ListviewのAdapterへ設定
         mListRamen.setAdapter(adapter);
 
@@ -68,13 +71,13 @@ public class ListActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 // リストからクリックされたitemを取得
-                RamenItem item = (RamenItem)adapter.getItem(position);
-               // RamenItem item = RamenLst.get(position);
+                RamenItem item = (RamenItem) adapter.getItem(position);
+                // RamenItem item = RamenLst.get(position);
 
                 // 画面遷移
                 Intent intent =
                         new Intent(ListActivity.this,
-                               CommentActivity.class );
+                                CommentActivity.class);
                 //Serializableインターフェイスをimplementsしたクラス
                 //intentからデータを取得する場合は
                 //RamenItem item = (RamenItem)getIntent().getSerializableExtra("item");
@@ -101,58 +104,49 @@ public class ListActivity extends ActionBarActivity {
                             public void onFinish(List<RamenItem> obj) {
 
                                 if (obj == null) return;
-
-                                //    List<RamenItem> tmp;
+/*
+                                List<RamenItem> items = new ArrayList<RamenItem>();
                                 for (RamenItem ramen : obj) {
 
-                    if(ramen.get_address().indexOf(gps_address[GeocoderManager.ORIGINAL]) != -1
-                    || ramen.get_address().indexOf(gps_address[GeocoderManager.NORTH]) != -1
-                    || ramen.get_address().indexOf(gps_address[GeocoderManager.SOUTH]) != -1
-                    || ramen.get_address().indexOf(gps_address[GeocoderManager.WEST]) != -1
-                    || ramen.get_address().indexOf(gps_address[GeocoderManager.EAST]) != -1)
+                                    if (ramen.get_address().indexOf(gps_address[GeocoderManager.ORIGINAL]) != -1
+                                            || ramen.get_address().indexOf(gps_address[GeocoderManager.NORTH]) != -1
+                                            || ramen.get_address().indexOf(gps_address[GeocoderManager.SOUTH]) != -1
+                                            || ramen.get_address().indexOf(gps_address[GeocoderManager.WEST]) != -1
+                                            || ramen.get_address().indexOf(gps_address[GeocoderManager.EAST]) != -1)
 
-                                    RamenLst.add(ramen);
+                                        items.add(ramen);
                                 }
-                                //String id = obj.get(0).getId();
-                                for (RamenItem ramen : obj) {
+*/
+                                new AsyncTask<List<RamenItem>, Void, List<RamenItem>>() {
 
-
-                                    new AsyncTask<List<RamenItem>, Void, List<RamenItem>>() {
-
-                                        @Override
-                                        protected List<RamenItem> doInBackground(List<RamenItem>... ramens) {
+                                    @Override
+                                    protected List<RamenItem> doInBackground(List<RamenItem>... ramens) {
 
                                         //RamenItemオブジェクトに格納されているURLからBitmapイメージをダウンロードしてオブジェクトにセット
-                                            for (RamenItem ramen : ramens[0]) {
-                                                ramen.set_ramenBitmap();
-                                            }
-
-                                            return ramens[0];
+                                        for (RamenItem ramen : ramens[0]) {
+                                            ramen.set_ramenBitmap();
                                         }
-                                    }.execute(obj);
-                                }
+
+                                        return ramens[0];
+                                    }
+                                }.execute(obj);
+
                                 adapter.addLst(obj);
 
                             }
                         }, (AppController) ListActivity.this.getApplication(), mParams.getParams());
 
-
                         // ListviewのAdapterへ設定
                         mListRamen.setAdapter(adapter);
-/*
-                        new Handler().postDelayed(new Runnable(){
-                            @Override
-                            public void run() {
 
-                                finish();
-                            }
-                        },3000);
-*/
+
                         if (mSwipeListRamen.isRefreshing()) {
                             mSwipeListRamen.setRefreshing(false);
 
+
                         }
 
+                        list_paranet.invalidate();
                         return;
                     }
                 });
@@ -164,7 +158,7 @@ public class ListActivity extends ActionBarActivity {
 
 
     //アドレスのの
-    final static int FULL_ADDRESS= 0;
+    final static int FULL_ADDRESS = 0;
     final static int PREFECTURE = 1;
     final static int SHICYOSON = 2;
     final static int GUN = 3;
@@ -184,7 +178,7 @@ public class ListActivity extends ActionBarActivity {
         // リストデータ組立
         //ここの時点でAPIからラーメン情報を取得
 
-        final GeocoderManager geocode_manager =  new GeocoderManager(this);
+        final GeocoderManager geocode_manager = new GeocoderManager(this);
 
         double latitude;
         double longitude;
@@ -210,25 +204,24 @@ public class ListActivity extends ActionBarActivity {
                 // strbuild.append(area_gps[geocode_manager.ORIGINAL][GOU]);
                 gps_address[i] = strbuild.toString();
             }
-
+            Toast.makeText(this,gps_address[0], Toast.LENGTH_SHORT).show();
             mParams.setRegion(gps_region[GeocoderManager.ORIGINAL]);
             mParams.setLimit(item_limit.toString());
 
-        }catch(Exception e){
+        } catch (Exception e) {
             Log.e("gecodeError", e.getMessage());
-            area_gps= null;
+            area_gps = null;
         }
-
-
 
 
         new ServerApiCall().callStoreList(new ServerApiCall.Listener<List<RamenItem>>() {
             @Override
             public void onFinish(List<RamenItem> obj) {
 
+                List<RamenItem> items = new ArrayList<RamenItem>();
                 if (obj == null) return;
 
-
+/*
                 for (RamenItem ramen : obj) {
 
                     if (ramen.get_address().indexOf(gps_address[geocode_manager.ORIGINAL]) != -1
@@ -237,41 +230,30 @@ public class ListActivity extends ActionBarActivity {
                             || ramen.get_address().indexOf(gps_address[geocode_manager.WEST]) != -1
                             || ramen.get_address().indexOf(gps_address[geocode_manager.EAST]) != -1)
 
-                        RamenLst.add(ramen);
+                        items.add(ramen);
                 }
-                //String id = obj.get(0).getId();
-                for (RamenItem ramen : obj) {
+*/
+                new AsyncTask<List<RamenItem>, Void, List<RamenItem>>() {
 
-                    //AsyncTask<List<RamenItem>, Void, List<RamenItem>> async =
-                    new AsyncTask<List<RamenItem>, Void, List<RamenItem>>() {
-
-                        @Override
-                        protected List<RamenItem> doInBackground(List<RamenItem>... ramens) {
+                    @Override
+                    protected List<RamenItem> doInBackground(List<RamenItem>... ramens) {
 
 
-                            for (RamenItem ramen : ramens[0]) {
-                                ramen.set_ramenBitmap();
-                            }
-
-                            return ramens[0];
+                        for (RamenItem ramen : ramens[0]) {
+                            ramen.set_ramenBitmap();
                         }
-                    }.execute(obj);
-                }
+
+                        return ramens[0];
+                    }
+
+                }.execute(obj);
+
+                list_paranet.invalidate();
+
                 adapter.addLst(obj);
 
             }
         }, (AppController) ListActivity.this.getApplication(), mParams.getParams());
-/*
-//画像のダウンロードの待ち時間はmainスレッドを3秒程度停止
-        new Handler().postDelayed(new Runnable(){
-            @Override
-            public void run() {
-
-                finish();
-            }
-        },3000);
-*/
-        adapter.addLst(RamenLst);
 
         return adapter;
 
@@ -287,7 +269,7 @@ public class ListActivity extends ActionBarActivity {
 
     public void onStart() {
         super.onStart();
-
+        list_paranet.invalidate();
 
     }
 
